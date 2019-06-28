@@ -421,10 +421,15 @@ End Sub
 Public Sub SetWhitespaceBack(useSetting As Boolean, back As Long)
   Call SendEditor(2085, useSetting, back)
 End Sub
+
 ' # is used to expand the possible states.
+'# Divide each styling byte into lexical class bits (default: 5) and indicator
+'# bits (default: 3). If a lexer requires more than 32 lexical states, then this
+'# is used to expand the possible states.
 Public Sub StyleSetBits(bits As Long)
   Call SendEditor(2090, bits, 0)
 End Sub
+
 ' # Retrieve number of bits in style bytes used to hold the lexical state.
 Public Function GetStyleBits() As Long
   GetStyleBits = SendEditor(2091, 0, 0)
@@ -1811,20 +1816,21 @@ End Sub
 
 ' # Maximum value of keywordSet parameter of SetKeyWords.
 ' # Set up the key words used by the lexer.
+'(keyword set index meaning is defined per lexer)
 Public Sub SetKeyWords(keywordSet As Long, Keywords As String)
-  Call SendEditor(4005, keywordSet, Keywords)
+  Call SendEditor(4005, keywordSet, Keywords)      'SCI_SETKEYWORDS (handled in ScintinillaBase.cxx)
 End Sub
 ' # Set the lexing language of the document based on string name.
 Public Sub SetLexerLanguage(language As String)
-  Call SendEditor(4006, 0, language)
+  Call SendEditor(4006, 0, language)              'SCI_SETLEXERLANGUAGE
 End Sub
 ' # Load a lexer library (dll / so).
 Public Sub LoadLexerLibrary(path As String)
-  Call SendEditor(4007, 0, path)
+  Call SendEditor(4007, 0, path)                  'SCI_LOADLEXERLIBRARY
 End Sub
 ' # Retrieve a "property" value previously set with SetProperty.
 Public Function GetProperty(Buf As String) As Long
-  GetProperty = SendEditor(4008, 0, Buf)
+  GetProperty = SendEditor(4008, 0, Buf)           ' SCI_GETPROPERTY
 End Function
 ' # with "$()" variable replacement on returned buffer.
 Public Function GetPropertyExpanded(Buf As String) As Long

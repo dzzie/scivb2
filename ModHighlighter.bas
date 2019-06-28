@@ -89,7 +89,7 @@ Public Function CompileVersionInfo(owner As scisimple) As String
     
 End Function
 
-
+'does not load it from file, must call first LoadHighlighter
 Private Function FindHighlighter(strLangName As String) As Integer
   Dim i As Integer
 
@@ -105,13 +105,14 @@ Private Function FindHighlighter(strLangName As String) As Integer
     
 End Function
 
+'does not load it from file, must call first LoadHighlighter
 Public Function SetHighlighter(owner As scisimple, strHighlighter As String) As Boolean
-  Dim i As Long, X As Long
+  Dim i As Long, x As Long
   
   On Error GoTo hell
   
-  X = FindHighlighter(strHighlighter)
-  If X = -1 Then Exit Function
+  x = FindHighlighter(strHighlighter)
+  If x = -1 Then Exit Function
   
   With owner
      .DirectSCI.ClearDocumentStyle
@@ -122,32 +123,32 @@ Public Function SetHighlighter(owner As scisimple, strHighlighter As String) As 
            .DirectSCI.StyleSetBits 5
      End If
      
-     .DirectSCI.SetLexer Highlighters(X).iLang
+     .DirectSCI.SetLexer Highlighters(x).iLang
      For i = 0 To 7
-           If Highlighters(X).Keywords(i) <> "" Then .DirectSCI.SetKeyWords i, Highlighters(X).Keywords(i)
+           If Highlighters(x).Keywords(i) <> "" Then .DirectSCI.SetKeyWords i, Highlighters(x).Keywords(i)
      Next i
     
-     .DirectSCI.StyleSetBack 32, Highlighters(X).StyleBack(32)
-     .DirectSCI.StyleSetFore 32, Highlighters(X).StyleFore(32)
-     .DirectSCI.StyleSetVisible 32, CLng(Highlighters(X).StyleVisible(32))
-     .DirectSCI.StyleSetEOLFilled 32, CLng(Highlighters(X).StyleEOLFilled(32))
-     .DirectSCI.StyleSetBold 32, CLng(Highlighters(X).StyleBold(32))
-     .DirectSCI.StyleSetItalic 32, CLng(Highlighters(X).StyleItalic(32))
-     .DirectSCI.StyleSetUnderline 32, CLng(Highlighters(X).StyleUnderline(32))
-     .DirectSCI.StyleSetFont 32, Highlighters(X).StyleFont(32)
-     .DirectSCI.StyleSetSize 32, Highlighters(X).StyleSize(32)
-     .DirectSCI.StyleClearAll
+     .DirectSCI.StyleSetBack 32, Highlighters(x).StyleBack(32)
+     .DirectSCI.StyleSetFore 32, Highlighters(x).StyleFore(32)
+     .DirectSCI.StyleSetVisible 32, CLng(Highlighters(x).StyleVisible(32))
+     .DirectSCI.StyleSetEOLFilled 32, CLng(Highlighters(x).StyleEOLFilled(32))
+     .DirectSCI.StyleSetBold 32, CLng(Highlighters(x).StyleBold(32))
+     .DirectSCI.StyleSetItalic 32, CLng(Highlighters(x).StyleItalic(32))
+     .DirectSCI.StyleSetUnderline 32, CLng(Highlighters(x).StyleUnderline(32))
+     .DirectSCI.StyleSetFont 32, Highlighters(x).StyleFont(32)
+     .DirectSCI.StyleSetSize 32, Highlighters(x).StyleSize(32)
+     .DirectSCI.StyleClearAll '<--wipes out above block? testing code?
      
      For i = 0 To 127
-           .DirectSCI.StyleSetBold i, CLng(Highlighters(X).StyleBold(i))
-           .DirectSCI.StyleSetItalic i, CLng(Highlighters(X).StyleItalic(i))
-           .DirectSCI.StyleSetUnderline i, CLng(Highlighters(X).StyleUnderline(i))
-           .DirectSCI.StyleSetVisible i, CLng(Highlighters(X).StyleVisible(i))
-           If Highlighters(X).StyleFont(i) <> "" Then .DirectSCI.StyleSetFont i, Highlighters(X).StyleFont(i)
-           .DirectSCI.StyleSetFore i, CLng(Highlighters(X).StyleFore(i))
-           .DirectSCI.StyleSetBack i, CLng(Highlighters(X).StyleBack(i))
-           .DirectSCI.StyleSetSize i, CLng(Highlighters(X).StyleSize(i))
-           .DirectSCI.StyleSetEOLFilled i, CLng(Highlighters(X).StyleEOLFilled(i))
+           .DirectSCI.StyleSetBold i, CLng(Highlighters(x).StyleBold(i))
+           .DirectSCI.StyleSetItalic i, CLng(Highlighters(x).StyleItalic(i))
+           .DirectSCI.StyleSetUnderline i, CLng(Highlighters(x).StyleUnderline(i))
+           .DirectSCI.StyleSetVisible i, CLng(Highlighters(x).StyleVisible(i))
+           If Highlighters(x).StyleFont(i) <> "" Then .DirectSCI.StyleSetFont i, Highlighters(x).StyleFont(i)
+           .DirectSCI.StyleSetFore i, CLng(Highlighters(x).StyleFore(i))
+           .DirectSCI.StyleSetBack i, CLng(Highlighters(x).StyleBack(i))
+           .DirectSCI.StyleSetSize i, CLng(Highlighters(x).StyleSize(i))
+           .DirectSCI.StyleSetEOLFilled i, CLng(Highlighters(x).StyleEOLFilled(i))
      Next i
      
      .DirectSCI.StyleSetFore 35, .misc.BraceBadFore
@@ -221,7 +222,7 @@ End Function
 
 Public Function HighlighterForExtension(file As String) As String
     
-    Dim ext  As String, X As Long
+    Dim ext  As String, x As Long
     
     On Error GoTo hell
     If hAryIsEmpty(Highlighters) Then Exit Function
@@ -229,12 +230,12 @@ Public Function HighlighterForExtension(file As String) As String
     ext = LCase$(Mid$(file, InStrRev(file, ".") + 1, Len(file) - InStrRev(file, ".")))
     ext = "." & ext
     
-    For X = 0 To UBound(Highlighters)
-        If InStr(1, Highlighters(X).strFilter, ext) Then
-            HighlighterForExtension = Highlighters(X).strName
+    For x = 0 To UBound(Highlighters)
+        If InStr(1, Highlighters(x).strFilter, ext) Then
+            HighlighterForExtension = Highlighters(x).strName
             Exit For
         End If
-    Next X
+    Next x
     
 hell:
     
@@ -242,8 +243,8 @@ End Function
 
 Private Function hAryIsEmpty(ary() As Highlighter) As Boolean
   On Error GoTo oops
-  Dim X As Long
-    X = UBound(ary)
+  Dim x As Long
+    x = UBound(ary)
     hAryIsEmpty = False
   Exit Function
 oops: hAryIsEmpty = True
@@ -251,8 +252,8 @@ End Function
 
 Private Sub hpush(ary() As Highlighter, Value As Highlighter) 'this modifies parent ary object
     On Error GoTo init
-    Dim X As Long
-    X = UBound(ary) '<-throws Error If Not initalized
+    Dim x As Long
+    x = UBound(ary) '<-throws Error If Not initalized
     ReDim Preserve ary(UBound(ary) + 1)
     ary(UBound(ary)) = Value
     Exit Sub
@@ -397,7 +398,7 @@ Public Sub CommentBlock2(SCI As scisimple)
   Dim lTmp As Long 'If the line sel is reversed
   Dim ua() As String
   Dim strSplit As String
-  Dim X As Long
+  Dim x As Long
   Dim lAdd As Long
   Dim currentHighlighter As Integer
   

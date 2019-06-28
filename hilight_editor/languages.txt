@@ -5,6 +5,9 @@ the ilang field is the related #define
 you can load a specific sclexer.dll manually by calling loadlib on it
 before you load a form with scivb
 
+see /test/notes.txt for details on the format of the .bin highlighter obj dump files
+each lexer has different meanings for the indexes...
+
 	LINK_LEXER(lmAsasm);
 	LINK_LEXER(lmAsm);
 	LINK_LEXER(lmCPP);
@@ -25,3 +28,4 @@ before you load a form with scivb
 #define SCLEX_ASM 34
 #define SCLEX_CPPNOCASE 35
 #define SCLEX_PHPSCRIPT 69
+

@@ -1,0 +1,34 @@
+4019F4 Module1.Sub Main:
+4019F4    04 74FF             FLdRfVar var_8C
+4019F7    04 78FF             FLdRfVar var_88
+4019FA    24 0000             NewIfNullPr Class1
+4019FD    0D 1C000100         VCallHresult Class1.first
+401A02    04 72FF             FLdRfVar var_8E
+401A05    04 78FF             FLdRfVar var_88
+401A08    24 0000             NewIfNullPr Class1
+401A0B    0D 20000100         VCallHresult Class1.second
+401A10    04 6CFF             FLdRfVar var_94
+401A13    04 78FF             FLdRfVar var_88
+401A16    24 0000             NewIfNullPr Class1
+401A19    0D 24000100         VCallHresult Class1.third
+401A1E    04 78FF             FLdRfVar var_88
+401A21    56 0000             NewIfNullAd
+401A24    FCFB 5CFF           FStVarAd var_A4
+401A28    04 5CFF             FLdRfVar var_A4
+401A2B    FD9F                LdPrVar
+401A2D    FE98 02000000       LateMemCall str_4017C8='first'  arg_0
+401A33    14                  ExitProc 
+
+[bracket] [bracket bad
+{brace}   {brace bad
++ 
+
+keywords0
+keywords1
+keywords2
+keywords3
+keywords4
+keywords5
+keywords6
+keywords7
+

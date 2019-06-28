@@ -1,7 +1,7 @@
 SciSimple = 87, 3, 1250, 915, , 44, 44, 791, 617, C
 CCmnDlg = 0, 0, 0, 0, C
-cDirectSCI = -148, 118, 966, 660, C
-CMiscSettings = 132, 132, 1104, 801, 
+cDirectSCI = 8, 34, 1122, 576, Z
+CMiscSettings = 132, 132, 1104, 801, C
 cSubclass = 90, 75, 927, 698, 
 frmAbout = 110, 110, 1062, 779, , 66, 66, 813, 639, C
 frmReplace = 154, 154, 867, 899, , 88, 88, 835, 661, C
