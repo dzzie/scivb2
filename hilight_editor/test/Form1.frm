@@ -86,68 +86,111 @@ Private Type Highlighter
   strFile As String
 End Type
 
+Const SCLEX_CPP = 3
+Const SCLEX_HTML = 4
+Const SCLEX_XML = 5
+Const SCLEX_SQL = 7
+Const SCLEX_VB = 8
+Const SCLEX_Asasm = 9
+Const SCLEX_ASM = 34
+Const SCLEX_CPPNOCASE = 35
+Const SCLEX_PHPSCRIPT = 69
+   
+Enum vbIndexes
+    SCE_B_DEFAULT = 0
+    SCE_B_COMMENT = 1
+    SCE_B_NUMBER = 2
+    SCE_B_KEYWORD = 3
+    SCE_B_STRING = 4
+    SCE_B_PREPROCESSOR = 5
+    SCE_B_OPERATOR = 6
+    SCE_B_IDENTIFIER = 7
+    SCE_B_DATE = 8
+    SCE_B_STRINGEOL = 9
+    SCE_B_KEYWORD2 = 10
+    SCE_B_KEYWORD3 = 11
+    SCE_B_KEYWORD4 = 12
+    SCE_B_CONSTANT = 13
+    SCE_B_ASM = 14
+    SCE_B_LABEL = 15
+    SCE_B_ERROR = 16
+    SCE_B_HEXNUMBER = 17
+    SCE_B_BINNUMBER = 18
+    SCE_B_COMMENTBLOCK = 19
+    SCE_B_DOCLINE = 20
+    SCE_B_DOCBLOCK = 21
+    SCE_B_DOCKEYWORD = 22
+End Enum
 
+Sub setVB(i As vbIndexes, _
+    Optional fore As ColorConstants = vbBlack, _
+    Optional back As ColorConstants = vbWhite, _
+    Optional font As String = "Courier New", _
+    Optional size As Long = 11, _
+    Optional bold As Boolean = False, _
+    Optional italic As Boolean = False, _
+    Optional underline As Boolean = False, _
+    Optional visible As Boolean = True)
+
+    With sc.DirectSCI
+           .StyleSetBold i, IIf(bold, 1, 0)
+           .StyleSetItalic i, IIf(italic, 1, 0)
+           .StyleSetUnderline i, IIf(underline, 1, 0)
+           .StyleSetVisible i, IIf(visible, 1, 0)
+           .StyleSetFont i, font
+           .StyleSetFore i, fore
+           .StyleSetBack i, back
+           .StyleSetSize i, size
+    End With
+    
+End Sub
 Private Sub Form_Load()
 
-  sc.LoadFile App.Path & "\x.txt"
+  'sc.LoadFile App.Path & "\x.txt"
+  'sc.DirectSCI.SetLexer SCLEX_CPP
+  
+  sc.LoadFile App.Path & "\vb.txt"
+  sc.DirectSCI.SetLexer SCLEX_VB
   
   Dim i As Long, x As Long
   
   'On Error GoTo hell
-    Const SCLEX_CPP = 3
-    Const SCLEX_HTML = 4
-    Const SCLEX_XML = 5
-    Const SCLEX_SQL = 7
-    Const SCLEX_VB = 8
-    Const SCLEX_Asasm = 9
-    Const SCLEX_ASM = 34
-    Const SCLEX_CPPNOCASE = 35
-    Const SCLEX_PHPSCRIPT = 69
-
-  
-  With sc
-     .DirectSCI.ClearDocumentStyle
-     .DirectSCI.StyleSetBits 5
-'     # Divide each styling byte into lexical class bits (default: 5) and indicator
-'    # bits (default: 3). If a lexer requires more than 32 lexical states, then this
-'    # is used to expand the possible states.
-'
-     .DirectSCI.SetLexer 3
-     
-     .DirectSCI.SetKeyWords 0, "VCallHresult ImpAdCallFPR4 LateMemCall keywords0"
-     
-    .DirectSCI.SetKeyWords 1, "NewIfNullPr keywords1"
-    .DirectSCI.SetKeyWords 2, "FStVarAd keywords2"
-    .DirectSCI.SetKeyWords 3, "keywords3"
-    .DirectSCI.SetKeyWords 4, "keywords4"
-    .DirectSCI.SetKeyWords 5, "keywords5"
-    .DirectSCI.SetKeyWords 6, "keywords6"
-    .DirectSCI.SetKeyWords 7, "keywords7"
     
-'     .DirectSCI.StyleSetBack 32, Highlighters(x).StyleBack(32)                          'so these blocks here are nonsense?
-'     .DirectSCI.StyleSetFore 32, Highlighters(x).StyleFore(32)                          'STYLE_DEFAULT = 32
-'     .DirectSCI.StyleSetVisible 32, CLng(Highlighters(x).StyleVisible(32))              'but .StyleClearAll wipes out and for loop
-'     .DirectSCI.StyleSetEOLFilled 32, CLng(Highlighters(x).StyleEOLFilled(32))          'would override anyway
-'     .DirectSCI.StyleSetBold 32, CLng(Highlighters(x).StyleBold(32))
-'     .DirectSCI.StyleSetItalic 32, CLng(Highlighters(x).StyleItalic(32))
-'     .DirectSCI.StyleSetUnderline 32, CLng(Highlighters(x).StyleUnderline(32))
-'     .DirectSCI.StyleSetFont 32, Highlighters(x).StyleFont(32)
-'     .DirectSCI.StyleSetSize 32, Highlighters(x).StyleSize(32)
-'     .DirectSCI.StyleClearAll                                                            <-- wipes out all before it..so why is this block here
-'
-     For i = 0 To 127
-           .DirectSCI.StyleSetBold i, 1
-           '.DirectSCI.StyleSetItalic i, 1
-           '.DirectSCI.StyleSetUnderline i, 1
-           '.DirectSCI.StyleSetVisible i, 1
-           'If Highlighters(x).StyleFont(i) <> "" Then .DirectSCI.StyleSetFont i, Highlighters(x).StyleFont(i)
-           .DirectSCI.StyleSetFore i, vbBlack
-           '.DirectSCI.StyleSetBack i, vbBlack
-           '.DirectSCI.StyleSetSize i, 21
-           '.DirectSCI.StyleSetEOLFilled i, 1
-     Next i
+
+  With sc.DirectSCI
+     .ClearDocumentStyle
+     .StyleSetBits 5
+     .StyleClearAll
      
-     '.DirectSCI.StyleSetFore 2, vbRed
+     If .GetLexer = SCLEX_CPP Then
+        .SetKeyWords 0, "VCallHresult ImpAdCallFPR4 LateMemCall keywords0"
+        .SetKeyWords 1, "NewIfNullPr keywords1"
+        .SetKeyWords 2, "FStVarAd keywords2"
+        .SetKeyWords 3, "keywords3"
+        .SetKeyWords 4, "keywords4"
+        .SetKeyWords 5, "keywords5"
+        .SetKeyWords 6, "keywords6"
+        .SetKeyWords 7, "keywords7"
+    Else
+        .SetKeyWords 0, "object begin beginproperty endproperty end" 'must be lowercase
+        '.SetKeyWords 1, "begin"
+        '.SetKeyWords 2, "beginproperty"
+        '.SetKeyWords 3, "endproperty end"
+        '.SetKeyWords 4, "end"
+        
+        setVB SCE_B_COMMENT, &H5500
+        setVB SCE_B_CONSTANT, vbRed
+        setVB SCE_B_HEXNUMBER, vbGreen
+        setVB SCE_B_IDENTIFIER, &HA00000 'dark blue
+        setVB SCE_B_KEYWORD, vbRed
+        'setVB SCE_B_KEYWORD2, vbMagenta
+        'setVB SCE_B_KEYWORD3, vbYellow
+        'setVB SCE_B_KEYWORD4, vbCyan
+        setVB SCE_B_STRING, &HC00090
+        setVB SCE_B_LABEL, &HFF00FF 'magenta
+    End If
+    
+     '.StyleSetFore 2, vbRed
      
      'scintinilla.iface
 '     # Styles in range 32..38 are predefined for parts of the UI and are not used as normal styles.
@@ -163,18 +206,30 @@ Private Sub Form_Load()
 '    Val STYLE_LASTPREDEFINED = 39
 '    Val STYLE_MAX = 255
 '
-'     .DirectSCI.StyleSetFore 35, .misc.BraceBadFore
-'     .DirectSCI.StyleSetFore 34, .misc.BraceMatchFore
-'     .DirectSCI.StyleSetBack 35, .misc.BraceBadBack
-'     .DirectSCI.StyleSetBack 34, .misc.BraceMatchBack
-'     .DirectSCI.StyleSetBold 35, .misc.BraceMatchBold
-'     .DirectSCI.StyleSetBold 34, .misc.BraceMatchBold
-'     .DirectSCI.StyleSetItalic 35, .misc.BraceMatchItalic
-'     .DirectSCI.StyleSetItalic 34, .misc.BraceMatchItalic
-'     .DirectSCI.StyleSetUnderline 35, .misc.BraceMatchUnderline
-'     .DirectSCI.StyleSetUnderline 34, .misc.BraceMatchUnderline
+'     .StyleSetBack 32, Highlighters(x).StyleBack(32)                          'so these blocks here are nonsense?
+'     .StyleSetFore 32, Highlighters(x).StyleFore(32)                          'STYLE_DEFAULT = 32
+'     .StyleSetVisible 32, CLng(Highlighters(x).StyleVisible(32))              'but .StyleClearAll wipes out and for loop
+'     .StyleSetEOLFilled 32, CLng(Highlighters(x).StyleEOLFilled(32))          'would override anyway
+'     .StyleSetBold 32, CLng(Highlighters(x).StyleBold(32))
+'     .StyleSetItalic 32, CLng(Highlighters(x).StyleItalic(32))
+'     .StyleSetUnderline 32, CLng(Highlighters(x).StyleUnderline(32))
+'     .StyleSetFont 32, Highlighters(x).StyleFont(32)
+'     .StyleSetSize 32, Highlighters(x).StyleSize(32)
+'                                                            <-- wipes out all before it..so why is this block here
+'
+
+'     .StyleSetFore 35, .misc.BraceBadFore
+'     .StyleSetFore 34, .misc.BraceMatchFore
+'     .StyleSetBack 35, .misc.BraceBadBack
+'     .StyleSetBack 34, .misc.BraceMatchBack
+'     .StyleSetBold 35, .misc.BraceMatchBold
+'     .StyleSetBold 34, .misc.BraceMatchBold
+'     .StyleSetItalic 35, .misc.BraceMatchItalic
+'     .StyleSetItalic 34, .misc.BraceMatchItalic
+'     .StyleSetUnderline 35, .misc.BraceMatchUnderline
+'     .StyleSetUnderline 34, .misc.BraceMatchUnderline
      
-     .DirectSCI.Colourise 0, -1
+     .Colourise 0, -1
      '.currentHighlighter = strHighlighter
   End With
 
@@ -185,10 +240,10 @@ End Sub
 
 Private Sub Slider1_Change()
         sc.DirectSCI.StyleSetFore j, vbBlack
-        Label1.Caption = Slider1.Value
-        sc.DirectSCI.StyleSetFore Slider1.Value, vbRed
+        Label1.Caption = Slider1.value
+        sc.DirectSCI.StyleSetFore Slider1.value, vbRed
         sc.DirectSCI.Colourise 0, -1
-        j = Slider1.Value
+        j = Slider1.value
 End Sub
 
 'cpp lexer (ilang3)

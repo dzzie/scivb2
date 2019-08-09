@@ -1099,9 +1099,15 @@ Public Property Get Text() As String    'Allows you to get and set the text of t
 End Property
 
 Public Property Let Text(ByVal New_Text As String)
+    Dim org_ro As Boolean
+    If m_ReadOnly Then   'we have to let api access modify it even if its readonly from user
+        org_ro = True
+        ReadOnly = False
+    End If
     m_Text = New_Text
     PropertyChanged "Text"
     DirectSCI.SetText New_Text
+    If org_ro Then ReadOnly = True
     DirectSCI.SetFocus
 End Property
 
@@ -1110,9 +1116,15 @@ Public Property Get SelText() As String 'Allows you to get and set the seltext o
 End Property
 
 Public Property Let SelText(ByVal New_SelText As String)
+    Dim org_ro As Boolean
+    If m_ReadOnly Then   'we have to let api access modify it even if its readonly from user
+        org_ro = True
+        ReadOnly = False
+    End If
     m_SelText = New_SelText
     PropertyChanged "SelText"
     DirectSCI.SetSelText m_SelText
+    If org_ro Then ReadOnly = True
     DirectSCI.SetFocus
 End Property
 

@@ -97,7 +97,7 @@ Begin VB.Form frmReplace
       Top             =   1440
       Width           =   975
    End
-   Begin VB.CommandButton Command1 
+   Begin VB.CommandButton cmdReplace 
       Caption         =   "Replace"
       Height          =   375
       Left            =   3960
@@ -397,7 +397,7 @@ Private Sub cmdFindNext_Click()
     
 End Sub
 
-Private Sub Command1_Click()
+Private Sub cmdReplace_Click()
     
     On Error Resume Next
     
@@ -447,11 +447,17 @@ Public Sub LaunchReplaceForm(txtObj As scisimple)
         lblSelSize = "Selection Size: " & Len(txtObj.SelText)
         Text1 = txtObj.SelText
     End If
+    If txtObj.ReadOnly Then
+        cmdReplace.Enabled = False
+        Me.Caption = "Read Only"
+    End If
     cmdFindAll.visible = True
     Me.show
     If Not init Then Form_Load
     Form_Resize
 End Sub
+
+
 
 
 Private Sub Form_Load()

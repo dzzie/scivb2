@@ -3,7 +3,9 @@ Form=Form1.frm
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\Windows\SysWOW64\stdole2.tlb#OLE Automation
 Object={2668C1EA-1D34-42E2-B89F-6B92F3FF627B}#5.0#0; scivb2.ocx
 Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0; mscomctl.ocx
+IconForm="Form1"
 Startup="Form1"
+ExeName32="Project1.exe"
 Command32=""
 Name="Project1"
 HelpContextID="0"
@@ -28,3 +30,6 @@ Unattended=0
 Retained=0
 ThreadPerObject=0
 MaxNumberOfThreads=1
+
+[fastBuild]
+fullPath=%ap%\Project1.exe
