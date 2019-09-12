@@ -1376,10 +1376,11 @@ Private Function CanAutoCompleteCurWord(strVal As String) As Boolean
     
   Dim iStart As Long, iEnd As Long, hits As Long
   Dim w As String, words() As String, word, matches() As String
-  Dim lineStart As Long
+  Dim lineStart As Long, firstCharIsDot As Boolean
   Const SCI_AUTOCCANCEL = 2101
   
-  w = CurrentWordInternal(iStart, iEnd)
+  w = CurrentWordInternal(iStart, iEnd, firstCharIsDot)
+  
   
   words = Split(strVal, " ")
   For Each word In words
@@ -1395,7 +1396,7 @@ Private Function CanAutoCompleteCurWord(strVal As String) As Boolean
          lineStart = Me.PositionFromLine(CurrentLine)
          Me.SelStart = lineStart + iStart - 1
          Me.SelEnd = lineStart + iEnd
-         Me.SelText = matches(0)
+         Me.SelText = matches(0) & IIf(firstCharIsDot, ".", "")
          Me.SelLength = 0
          CanAutoCompleteCurWord = True
          SendMessage SCI, SCI_AUTOCCANCEL, 0, 0 'hide the auto select list if already shown
@@ -1410,12 +1411,12 @@ Public Function CurrentWord() As String
     CurrentWord = CurrentWordInternal()
 End Function
 
-Private Function CurrentWordInternal(Optional iStart As Long, Optional iEnd As Long) As String
+Private Function CurrentWordInternal(Optional iStart As Long, Optional iEnd As Long, Optional firstCharIsDot As Boolean) As String
     Dim line As String, x As Integer
     Dim newstr As String ', iPos As Integer, iStart As Long, iEnd As Long
     Dim i As Integer
     Dim c As String
-    Dim firstCharIsDot As Boolean
+    'Dim firstCharIsDot As Boolean
     
     line = GetLineText(CurrentLine())
     x = GetCaretInLine

@@ -1,1 +1,7 @@
+SETSAVEPOINT
+SCI_SETSAVEPOINT
+Modify
+isdirty
+dwell
+MouseDown
 PropertyChanged

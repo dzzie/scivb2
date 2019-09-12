@@ -1525,7 +1525,7 @@ Public Function GetMouseDownCaptures() As Boolean
 End Function
 ' # Sets the cursor to one of the SC_CURSOR* values.
 Public Sub SetCursor(cursorType As Long)
-  Call SendEditor(2386, cursorType, 0)
+  Call SendEditor(2386, cursorType, 0) '0 2 normal , 1 caret, 3 uparrow, 4 wait, 5 left/right resize, 6 up/down size, 7 left handed arrow, 8 hand
 End Sub
 ' # Get cursor type.
 Public Function GetCursor() As Long
