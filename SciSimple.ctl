@@ -1565,6 +1565,8 @@ End Property
 
 Private Sub SetCallTipHighlight(lStart As Long, lEnd As Long)
   SendEditor SCI_CALLTIPSETHLT, lStart, lEnd
+  Debug.Print lStart & " " & lEnd
+  If lEnd = 0 Then Stop
 End Sub
 
 Public Sub StopCallTip()
@@ -1618,24 +1620,30 @@ Private Sub StartCallTip(ch As Long)
                   If Left(LCase$(APIStrings(i)), Len(newstr)) = LCase$(newstr) Then ' case insensitive string
                           ActiveCallTip = i
               
-                          iPos = InStr(1, APIStrings(i), ")")
-                          ShowCallTip Left$(APIStrings(i), iPos) ' to end of function
-              
-                          iPos = InStr(1, APIStrings(i), ",")
-                          If iPos > 0 Then
-                              iStart = Len(newstr)
-                              iEnd = iPos - 1
-                              SetCallTipHighlight iStart, iEnd
-                              Exit For
+                          If InStr(APIStrings(i), vbCrLf) > 0 Then 'multiline tip show whole thing - no cur arg highlights 12.12.19
+                                ShowCallTip Left$(APIStrings(i), Len(APIStrings(i)))
+                                'todo: highlight cur arg for each line..dont care for now rare for overloads and can use scroll
+                                Exit Sub
                           Else
-                              ' single parameter ?
-                              If Len(newstr) + 1 <> Len(APIStrings(i)) Then
-                                  iStart = Len(newstr)
-                                  iEnd = Len(APIStrings(i)) - 1
-                                  SetCallTipHighlight iStart, iEnd
-                                  Exit For
-                              End If
-                          End If
+                                iPos = InStr(1, APIStrings(i), ")")
+                                ShowCallTip Left$(APIStrings(i), iPos)  ' to end of function
+                    
+                                iPos = InStr(1, APIStrings(i), ",")
+                                If iPos > 0 Then
+                                    iStart = Len(newstr)
+                                    iEnd = iPos - 1
+                                    SetCallTipHighlight iStart, iEnd
+                                    Exit For
+                                Else
+                                    ' single parameter ?
+                                    If Len(newstr) + 1 <> Len(APIStrings(i)) Then
+                                        iStart = Len(newstr)
+                                        iEnd = Len(APIStrings(i)) - 1
+                                        SetCallTipHighlight iStart, iEnd
+                                        Exit For
+                                    End If
+                                End If
+                         End If
                   End If
              Next
              
@@ -1653,11 +1661,12 @@ Private Sub StartCallTip(ch As Long)
                 iPos = InStrRev(line, "(", x)
                 PartLine = Mid(line, iPos + 1, x - iPos) 'Get the chunk of the string were in
         
+                If InStr(APIStrings(ActiveCallTip), vbCrLf) > 0 Then Exit Sub 'multiline exception for arg highlighting
+                    
                 If InStr(1, APIStrings(ActiveCallTip), ",") = 0 Then   ' only one param
                     iStart = InStr(1, APIStrings(ActiveCallTip), "(") - 1
                     iEnd = InStr(1, APIStrings(ActiveCallTip), ")") - 1
                 Else
-        
                     'Count which param
                     iPos = CountOccurancesOfChar(PartLine, ",")
                     'Highlight Param in calltip
