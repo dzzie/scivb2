@@ -44,9 +44,9 @@ Begin VB.Form d
    End
    Begin sci2.SciSimple SciSimple1 
       Height          =   4200
-      Left            =   315
+      Left            =   240
       TabIndex        =   2
-      Top             =   765
+      Top             =   1140
       Width           =   9465
       _ExtentX        =   16695
       _ExtentY        =   7408
@@ -67,6 +67,23 @@ Begin VB.Form d
       Top             =   90
       Width           =   1230
    End
+   Begin VB.Label Label1 
+      Caption         =   "multiline calltip test type xx. or yy. for scrolling"
+      BeginProperty Font 
+         Name            =   "Courier"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   315
+      Left            =   840
+      TabIndex        =   7
+      Top             =   660
+      Width           =   6855
+   End
 End
 Attribute VB_Name = "d"
 Attribute VB_GlobalNameSpace = False
@@ -80,7 +97,7 @@ Const SCLEX_ERRORLIST = 10
 Private Declare Function GetTickCount Lib "kernel32" () As Long
 Dim isLocked As Boolean
 
-
+Dim multi As New CMuiltiLineTip
 
  
 
@@ -185,7 +202,9 @@ Private Sub Form_Load()
 '    Next
 '
 '    SaveHighlighter pth
-
+    
+    Set multi.Sci = SciSimple1
+    
     With SciSimple1
         .codePage = SC_CP_UTF8
         .WordWrap = True
@@ -210,6 +229,7 @@ Private Sub Form_Load()
          If Not .LoadFile(App.Path & "\test.js") Then
             .Text = Replace("a = 1; a++; a++; alert(a);", ";", ";" & vbCrLf)
          End If
+         
          
     End With
     
@@ -252,8 +272,13 @@ Private Sub SciSimple1_AutoCompleteEvent(className As String)
                                
     ElseIf className = "list" Or prevWord = "list" Then
         SciSimple1.ShowAutoComplete "additem clear"
+        SciSimple1.AddCallTip "additem(test)" & vbCrLf & "additem(test,test)"
     ElseIf className = "app" Or prevWord = "app" Then
         SciSimple1.ShowAutoComplete "getclipboard setclipboard askvalue openfiledialog savefiledialog exec list benchmark enableIDADebugMessages"
+    ElseIf className = "xx" Then
+        SciSimple1.ShowCallTip "test(xx,yy)" & vbCrLf & "test(yy)" & vbCrLf & "test(zz)"
+    ElseIf className = "yy" Then
+         multi.InitAndShow Array("test(xx,yy)", "test(yy)", "test(zz)", "test(kksssssssssssss)")
     End If
         
     
@@ -261,6 +286,10 @@ End Sub
 
 Private Sub SciSimple1_OnError(Number As String, Description As String)
     MsgBox "SciSimple Error: " & Description
+End Sub
+
+Private Sub SciSimple1_CallTipClick(Position As Long)
+    Debug.Print "call tip click pos: " & Position
 End Sub
 
 Private Sub SciSimple1_MarginClick(lline As Long, Position As Long, margin As Long, modifiers As Long)

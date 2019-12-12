@@ -2,6 +2,7 @@ Type=Exe
 Form=Form1.frm
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\Windows\SysWOW64\stdole2.tlb#OLE Automation
 Object={2668C1EA-1D34-42E2-B89F-6B92F3FF627B}#5.0#0; scivb2.ocx
+Class=CMuiltiLineTip; CMuiltiLineTip.cls
 IconForm="d"
 Startup="d"
 HelpFile=""
