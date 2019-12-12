@@ -68,7 +68,7 @@ Begin VB.Form d
       Width           =   1230
    End
    Begin VB.Label Label1 
-      Caption         =   "multiline calltip test type xx. or yy. for scrolling"
+      Caption         =   "multiline calltip test list. xx. or yy. for scrolling"
       BeginProperty Font 
          Name            =   "Courier"
          Size            =   9.75
@@ -286,10 +286,6 @@ End Sub
 
 Private Sub SciSimple1_OnError(Number As String, Description As String)
     MsgBox "SciSimple Error: " & Description
-End Sub
-
-Private Sub SciSimple1_CallTipClick(Position As Long)
-    Debug.Print "call tip click pos: " & Position
 End Sub
 
 Private Sub SciSimple1_MarginClick(lline As Long, Position As Long, margin As Long, modifiers As Long)

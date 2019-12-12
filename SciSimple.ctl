@@ -1360,7 +1360,7 @@ Public Sub ShowAutoComplete(strVal As String)
   
   If CanAutoCompleteCurWord(strVal) Then Exit Sub
   
-  i = ToLastSpaceCount
+  i = ToLastSpaceCount 'if last char was a " this will return 1 and autoc wont show...
   SendMessageString SCI, SCI_AUTOCSHOW, i, SortString(strVal)
 
 End Sub
@@ -1595,7 +1595,7 @@ Private Sub StartCallTip(ch As Long)
             ' For those compilers that allow whitespace between function and parenthesis
             ' ignore whitespace
             For i2 = x - 1 To 1 Step -1
-                If Mid(line, i2, 1) < 33 And newstr <> "" Then    ' ignore whitespace before (
+                If Asc(Mid(line, i2, 1)) < 33 And newstr <> "" Then    ' ignore whitespace before (
                     Exit For
                 Else
                     If InStr(1, CallTipWordCharacters, Mid(line, i2, 1)) > 0 Then

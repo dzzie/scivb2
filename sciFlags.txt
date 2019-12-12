@@ -1,0 +1,42 @@
+SCI_AUTOCGETIGNORECASE
+
+SCI_AUTOCSETIGNORECASE(bool ignoreCase)
+SCI_AUTOCGETIGNORECASE → bool
+By default, matching of characters to list members is case sensitive. These messages let you set and get case sensitivity.
+
+SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR(int behaviour)
+SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR → int
+When autocompletion is set to ignore case (SCI_AUTOCSETIGNORECASE), by default it will nonetheless select the first list member that matches in a case sensitive way to entered characters. This corresponds to a behaviour property of SC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE (0). If you want autocompletion to ignore case at all, choose SC_CASEINSENSITIVEBEHAVIOUR_IGNORECASE (1).
+
+SCI_AUTOCSETORDER(int order)
+SCI_AUTOCGETORDER → int
+The default setting SC_ORDER_PRESORTED (0) requires that the list be provided in alphabetical sorted order.
+
+Sorting the list can be done by Scintilla instead of the application with SC_ORDER_PERFORMSORT (1). This will take additional time.
+
+Applications that wish to prioritize some values and show the list in order of priority instead of alphabetical order can use SC_ORDER_CUSTOM (2). This requires extra processing in SCI_AUTOCSHOW to create a sorted index.
+
+Setting the order should be done before calling SCI_AUTOCSHOW.
+
+SCI_AUTOCSETAUTOHIDE(bool autoHide)
+SCI_AUTOCGETAUTOHIDE → bool
+By default, the list is cancelled if there are no viable matches (the user has typed characters that no longer match a list entry). If you want to keep displaying the original list, set autoHide to false. This also effects SCI_AUTOCSELECT.
+
+
+
+
+Public Const SCI_AUTOCSETIGNORECASE = 2115  ' Establece si afectan mays/min a la búsqueda en la lista
+
+Public Const SCI_AUTOCSETIGNORECASE = 2115  ' Establece si afectan mays/min a la búsqueda en la lista
+Public Const SCI_AUTOCGETIGNORECASE = 2116  ' Devuelve si afectan mays/min a la búsqueda en la lista
+Public Const SCI_AUTOCSETAUTOHIDE = 2118    ' Establece si la lista se oculta si no existen coindicencias.
+Public Const SCI_AUTOCGETAUTOHIDE = 2119    ' Devuelve el comportamiento de la lista si no existen coincidencias.
+
+Public Const  SC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE =0
+Public Const  SC_CASEINSENSITIVEBEHAVIOUR_IGNORECASE =1
+Public Const  SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR =2634
+Public Const  SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR =2635
+
+
+Public Const SCI_AUTOCSETORDER = 2660
+Public Const SCI_AUTOCGETORDER = 2661
