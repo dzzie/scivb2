@@ -103,7 +103,7 @@ Public Declare Function LoadLibrary Lib "kernel32" Alias "LoadLibraryA" (ByVal l
 Public Declare Function ConvCStringToVBString Lib "kernel32" Alias "lstrcpyA" (ByVal lpsz As String, ByVal pt As Long) As Long
 Public Declare Function DefWindowProc Lib "user32" Alias "DefWindowProcA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
 Public Declare Function FreeLibrary Lib "kernel32" (ByVal hLibModule As Long) As Long
-Public Declare Function CreateWindowEx Lib "user32" Alias "CreateWindowExA" (ByVal dwExStyle As Long, ByVal lpClassName As String, ByVal lpWindowName As String, ByVal dwStyle As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hWndParent As Long, ByVal hMenu As Long, ByVal hInstance As Long, lpParam As Any) As Long
+Public Declare Function CreateWindowEx Lib "user32" Alias "CreateWindowExA" (ByVal dwExStyle As Long, ByVal lpClassName As String, ByVal lpWindowName As String, ByVal dwStyle As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hWndParent As Long, ByVal hMenu As Long, ByVal hInstance As Long, lpParam As Any) As Long
 Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
 Public Declare Function LockWindowUpdate Lib "user32" (ByVal hwndLock As Long) As Long
 Public Declare Function VarPtrArray Lib "msvbvm60.dll" Alias "VarPtr" (Var() As Any) As Long
@@ -244,6 +244,20 @@ hell:
     
 End Function
 
+
+
+Function GetParentFolder(path) As String
+    On Error Resume Next
+    Dim tmp() As String, ub
+    If Len(path) = 0 Then Exit Function
+    If InStr(path, "\") < 1 Then
+        GetParentFolder = path
+    Else
+        tmp = Split(path, "\")
+        ub = tmp(UBound(tmp))
+        GetParentFolder = Replace(Join(tmp, "\"), "\" & ub, "")
+    End If
+End Function
 
 Public Function GetLoadedSciLexerPath() As String
      Dim h As Long, ret As String
@@ -576,8 +590,8 @@ End Sub
 
 Function AryIsEmpty(ary) As Boolean
   On Error GoTo oops
-  Dim X As Long
-    X = UBound(ary)
+  Dim x As Long
+    x = UBound(ary)
     AryIsEmpty = False
   Exit Function
 oops: AryIsEmpty = True
@@ -585,8 +599,8 @@ End Function
 
 Sub push(ary, Value) 'this modifies parent ary object
     On Error GoTo init
-    Dim X As Long
-    X = UBound(ary) '<-throws Error If Not initalized
+    Dim x As Long
+    x = UBound(ary) '<-throws Error If Not initalized
     ReDim Preserve ary(UBound(ary) + 1)
     ary(UBound(ary)) = Value
     Exit Sub

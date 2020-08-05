@@ -6,6 +6,6 @@ cSubclass = 90, 75, 927, 698,
 frmAbout = 110, 110, 1062, 779, , 66, 66, 813, 639, C
 frmReplace = 159, 62, 1148, 807, , 88, 88, 1135, 753, C
 iSubclass = 176, 176, 861, 679, C
-modGeneral = 47, 32, 1028, 944, 
+modGeneral = 47, 32, 1028, 944, C
 ModHighlighter = 35, 36, 1112, 845, 
 ModSCIConst = 132, 132, 845, 877, C

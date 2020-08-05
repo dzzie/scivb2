@@ -666,6 +666,9 @@ Private Sub UserControl_Initialize()
         
         Dim f As String
         f = App.path & "\java.hilighter"
+        If Not FileExists(f) Then f = GetParentFolder(GetLoadedSciLexerPath()) & "\java.hilighter"
+        If Not FileExists(f) Then f = "java.hilighter"
+        If Not FileExists(f) Then f = "java.bin"
         If FileExists(f) Then LoadHighlighter f
 
 End Sub
