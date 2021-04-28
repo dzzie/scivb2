@@ -1,3 +1,5 @@
+scilexer
+declare
 SETSAVEPOINT
 SCI_SETSAVEPOINT
 Modify

@@ -81,8 +81,7 @@ Public Function CompileVersionInfo(owner As scisimple) As String
         hlNames = Trim(hlNames)
         If Len(hlNames) > 1 Then hlNames = VBA.Left(hlNames, Len(hlNames) - 1)
         push ret(), UBound(Highlighters) + 1 & " highlighter(s) loaded: " & hlNames
-        hIndex = owner.currentHighlighter
-        push ret(), "Active Highlighter: " & Highlighters(hIndex).strFile
+        push ret(), "Active Highlighter: " & owner.currentHighlighter
     End If
     
     CompileVersionInfo = Join(ret, vbCrLf)

@@ -2,14 +2,29 @@ VERSION 5.00
 Object = "{2668C1EA-1D34-42E2-B89F-6B92F3FF627B}#5.0#0"; "scivb2.ocx"
 Begin VB.Form d 
    Caption         =   "Form1"
-   ClientHeight    =   5490
+   ClientHeight    =   7620
    ClientLeft      =   60
    ClientTop       =   345
    ClientWidth     =   9945
    LinkTopic       =   "Form1"
-   ScaleHeight     =   5490
+   ScaleHeight     =   7620
    ScaleWidth      =   9945
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdAbout 
+      Caption         =   "about"
+      Height          =   465
+      Left            =   8280
+      TabIndex        =   9
+      Top             =   585
+      Width           =   1275
+   End
+   Begin VB.ListBox List1 
+      Height          =   1620
+      Left            =   225
+      TabIndex        =   8
+      Top             =   5535
+      Width           =   9420
+   End
    Begin VB.CommandButton Command5 
       Caption         =   "Command5"
       Height          =   375
@@ -100,6 +115,10 @@ Dim isLocked As Boolean
 Dim multi As New CMuiltiLineTip
 
  
+
+Private Sub cmdAbout_Click()
+    SciSimple1.ShowAbout
+End Sub
 
 Private Sub Command1_Click()
      
@@ -203,9 +222,17 @@ Private Sub Form_Load()
 '
 '    SaveHighlighter pth
     
+    Dim r As Boolean
+    
     Set multi.Sci = SciSimple1
     
     With SciSimple1
+        r = .LoadHighlighter("D:\_code\scivb2\sql.hilighter")
+        List1.AddItem "Load sql: " & r
+        
+        r = .SetHighlighter("SQL")
+         List1.AddItem "Set highlighter sql " & r
+         
         .codePage = SC_CP_UTF8
         .WordWrap = True
         .ShowIndentationGuide = True
