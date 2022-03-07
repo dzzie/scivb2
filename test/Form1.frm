@@ -315,6 +315,20 @@ Private Sub SciSimple1_OnError(Number As String, Description As String)
     MsgBox "SciSimple Error: " & Description
 End Sub
 
+Private Sub SciSimple1_KeyDown(KeyCode As Long, Shift As Long) '
+    'Debug.Print KeyCode '38 up arrow, 40 down arrow
+    'can not eat keypress
+End Sub
+
+'not for arrows?
+Private Sub SciSimple1_KeyPress(Char As Long)
+    Debug.Print Char
+End Sub
+
+Private Sub SciSimple1_KeyUp(KeyCode As Long, Shift As Long)
+    KeyCode = 0
+End Sub
+
 Private Sub SciSimple1_MarginClick(lline As Long, Position As Long, margin As Long, modifiers As Long)
     SciSimple1.SetMarker lline
     Text1 = lline

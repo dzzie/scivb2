@@ -47,6 +47,21 @@ Sub InitAndShow(tipAry)
     
 End Sub
 
+Public Sub NextCallTip()
+    If curLine = totalLines Then Exit Sub
+    curLine = curLine + 1
+    Sci.StopCallTip  'without this (which introduces flicker) it fails to update for some randomly
+    Sci.ShowCallTip curTip
+End Sub
+
+Public Sub PrevCallTip()
+    If curLine = 0 Then Exit Sub
+    curLine = curLine - 1
+    Sci.StopCallTip  'without this (which introduces flicker) it fails to update for some randomly
+    Sci.ShowCallTip curTip
+End Sub
+
+
 Private Sub Sci_CallTipClick(Position As Long)
     Dim t As String
     
