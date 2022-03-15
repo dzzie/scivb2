@@ -281,6 +281,11 @@ Private Sub SciSimple1_AutoCompleteEvent(className As String)
     'scintinella is smart enough to autoscroll the autocomplete list to the partial match of the curWord :)
     'so fso.app CTRL+H will send us curword=app prevword=fso and sci will scroll to appendfile at top of list.
     
+    If className = "" And prevWord = "" Then
+         SciSimple1.ShowAutoComplete "tb fso list app xx yy"
+         Exit Sub
+    End If
+    
     If className = "tb" Or prevWord = "tb" Then
         SciSimple1.ShowAutoComplete "Save2Clipboard GetClipboard t eval unescape alert Hexdump WriteFile ReadFile HexString2Bytes Disasm pad EscapeHexString GetStream CRC getPageNumWords GetPageNthWord"
     End If
