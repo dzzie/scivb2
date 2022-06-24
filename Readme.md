@@ -4,6 +4,16 @@ This is an OCX wrapper for the Scintilla source code editor component.
 
 ![screenshot](https://raw.githubusercontent.com/dzzie/scivb2/master/screenshot.png)
 
+Projects using this:
+<ul>
+<li><a href="https://github.com/dzzie/duk4vb">Duk4vb JS Debugger</a>, <a href="https://www.youtube.com/watch?v=nSr1-OugQ1M">(Video)</a>
+<li>https://github.com/dzzie/YaraWorkBench, <a href="https://www.youtube.com/watch?v=BGnoE_Xs0o4">(Video)</a>
+<li>https://github.com/dzzie/IDA_JScript, <a href="https://www.youtube.com/watch?v=R3VuMELfYFU">(Video)</a> 
+<li>https://github.com/dzzie/pdfstreamdumper
+<li>https://github.com/dzzie/ScriptBasic_Control <a href="https://www.youtube.com/watch?v=KQMvAA_bGdU">(Video)</a> 
+<li><a href="http://sandsprite.com/vbdec/">VbDec Pcode Debugger</a>, <a href="https://www.youtube.com/watch?v=SmVmgdcCrDA">(Video)</a>
+</ul>
+
 <pre>
 
 This control has been modified from its original. This build has
