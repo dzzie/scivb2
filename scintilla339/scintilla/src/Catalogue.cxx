@@ -82,6 +82,7 @@ int Scintilla_LinkLexers() {
 	LINK_LEXER(lmCPPNoCase);
 	LINK_LEXER(lmHTML);
 	LINK_LEXER(lmPHPSCRIPT);
+	LINK_LEXER(lmPython);
 	LINK_LEXER(lmSQL);
 	LINK_LEXER(lmVB);
 	LINK_LEXER(lmVBScript);

@@ -23,7 +23,8 @@
 #define SCLEX_PERL 6
 #define SCLEX_SQL 7
 #define SCLEX_VB 8
-#define SCLEX_Asasm 9
+#define SCLEX_Asasm  9
+#define SCLEX_PROPERTIES 9
 #define SCLEX_ERRORLIST 10
 #define SCLEX_MAKEFILE 11
 #define SCLEX_BATCH 12

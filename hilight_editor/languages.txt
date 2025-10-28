@@ -18,7 +18,8 @@ each lexer has different meanings for the indexes...
 	LINK_LEXER(lmVB);
 	LINK_LEXER(lmVBScript);
 	LINK_LEXER(lmXML);
-
+    LINK_LEXER(lmPython);
+    
 #define SCLEX_CPP 3
 #define SCLEX_HTML 4
 #define SCLEX_XML 5
@@ -29,3 +30,4 @@ each lexer has different meanings for the indexes...
 #define SCLEX_CPPNOCASE 35
 #define SCLEX_PHPSCRIPT 69
 
+#define SCLEX_PYTHON 2
